@@ -6,18 +6,26 @@ sap.ui.define([], function () {
     constructor() {
       super();
 
-      const div = document.createElement("div");
-      div.style.width = "100%";
-      div.style.height = "100%";
-      div.style.display = "flex";
-      div.style.alignItems = "center";
-      div.style.justifyContent = "center";
-      div.style.fontSize = "18px";
-      div.style.fontWeight = "bold";
+      // Create container
+      const container = document.createElement("div");
+      container.style.width = "100%";
+      container.style.height = "100%";
 
-      div.innerText = "Hello from Custom Widget";
+      // Create iframe
+      this._iframe = document.createElement("iframe");
+      this._iframe.style.width = "100%";
+      this._iframe.style.height = "100%";
+      this._iframe.style.border = "none";
 
-      this.appendChild(div);
+      container.appendChild(this._iframe);
+      this.appendChild(container);
+    }
+
+    // Called when widget properties change
+    onCustomWidgetAfterUpdate() {
+      if (this.appUrl && this._iframe.src !== this.appUrl) {
+        this._iframe.src = this.appUrl;
+      }
     }
   }
 
